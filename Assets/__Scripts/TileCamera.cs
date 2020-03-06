@@ -30,8 +30,10 @@ public class TileCamera : MonoBehaviour {
         // Read in the map data
         string[] lines = mapData.text.Split('\n');
         H = lines.Length;
+        print(H);
         string[] tileNums = lines[0].Split(' ');
         W = tileNums.Length;
+        print(W);
 
         System.Globalization.NumberStyles hexNum;
         hexNum = System.Globalization.NumberStyles.HexNumber;
@@ -42,16 +44,27 @@ public class TileCamera : MonoBehaviour {
             tileNums = lines[j].Split(' ');
             for (int i = 0; i < W; i++)
             {
-                print(tileNums[i]);
                 if (tileNums[i] == "..")
                 {
                     MAP[i, j] = 0;
                     print("Loaded 0");
+                    print(i);
+                    print(j);
                 }
                 else
                 {
-                    MAP[i, j] = int.Parse(tileNums[i], hexNum);
-                    print("Loaded " + tileNums[i]);
+                    try
+                    {
+                        MAP[i, j] = int.Parse(tileNums[i], hexNum);
+                        print("Loaded " + tileNums[i]);
+                        print(i);
+                        print(j);
+                    }
+                    catch (System.Exception e)
+                    {
+                        MAP[i, j] = 0;
+                        print(e.Data);
+                    }
                 }
             } // End of row for loop
         } // End of column for loop
